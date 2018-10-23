@@ -160,4 +160,4 @@ MyPromise.reject = error => {
 }
 
 // module.exports = MyPromise
-export { MyPromise }
+export default MyPromise
