@@ -8,16 +8,15 @@ class MyPromise {
     constructor (fn) {
         //状态值: pending（待定） | resolved（已执行） | rejected（已拒绝）
         this._status = 'pending'
-
+        // debugger
         //正常结果值
         this._value = null
 
         //异常错误值
         this._error = null
 
-        // 结束状态（完成或者失败）都需要做一些清理工作
+        // resolve/reject必须先设置值，再修改状态（状态变更触发订阅）
         let resolve = data => {
-            // debugger
             this._value = data
             this._status = 'resolved'
         }
@@ -27,7 +26,7 @@ class MyPromise {
             this._status = 'rejected'
         }
 
-        fn.call(null, resolve, reject)
+        fn(resolve, reject)
     }
 
     /**
@@ -41,15 +40,24 @@ class MyPromise {
             // promise在pending时遇到then,return一个同样是pending状态的promise，状态变化跟源状态保持一致。
             case 'pending':
                 return new MyPromise((resolve, reject) => {
-                    this.__defineSetter__('_status', newStatus => {
-                        // debugger
-                        if(newStatus === 'resolved'){
-                            let val = successCallback(this._value)
-                            resolve(val)
-                        }else if(newStatus === 'rejected'){
-                            if(typeof errorCallback === 'function'){
-                                let err = successCallback(this._error)
-                                reject(err)
+                    // 将原始声明的对象属性改为setter/getter
+                    let status = this._status
+                    delete this._status
+                    Object.defineProperty(this, '_status', {
+                        get () {
+                            return status
+                        },
+                        set (newStatus){
+                            status = newStatus
+                            // debugger
+                            if(newStatus === 'resolved'){
+                                let val = successCallback(this._value)
+                                resolve(val)
+                            }else if(newStatus === 'rejected'){
+                                if(typeof errorCallback === 'function'){
+                                    let err = successCallback(this._error)
+                                    reject(err)
+                                }
                             }
                         }
                     })
@@ -76,10 +84,18 @@ class MyPromise {
     catch (errorCallback) {
         if(this._status === 'pending'){
             return new MyPromise((resolve, reject) => {
-                this.__defineSetter__('_status', newStatus => {
-                    if(newStatus === 'rejected'){
-                        let err = successCallback(this._error)
-                        reject(err)
+                let status = this._status
+                delete this._status
+                Object.defineProperty(this, '_status', {
+                    get (){
+                        return status
+                    },
+                    set (newStatus){
+                        status = newStatus
+                        if(newStatus === 'rejected'){
+                            let err = successCallback(this._error)
+                            reject(err)
+                        }
                     }
                 })
             })
@@ -109,12 +125,13 @@ MyPromise.race = (...ps) => {
 }
 
 //所有promise并行发出，类似于Array#every方法，只要有一个失败，就全部判定为失败；所有成功才算成功。
-MyPromise.all = (...ps) => {
+MyPromise.all = (ps) => {
     return new MyPromise((resolve, reject) => {
         let allResolved = false
         let data = []
         for(let index = 0, len = ps.length; index < len; index++){
             let p = ps[index]
+
             p.then(d => {
                 data[index] = d
                 // 判断是否ps所有都已经走了then回调，都走了之后就调用resolve
