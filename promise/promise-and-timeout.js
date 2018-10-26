@@ -1,8 +1,4 @@
 
-
-console.log([] == false); // true. Why ?
-
-
 setTimeout( ()=> {
     console.log(4)
 },0)
