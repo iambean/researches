@@ -19,20 +19,7 @@ from leetcode : https://leetcode-cn.com/problems/shu-zu-zhong-de-ni-xu-dui-lcof/
  * @return {number}
  */
 var reversePairs = function(nums) {
-    // 做简单的由小到大的冒泡排序，过程中的交换次数即要求的逆序对。
-    let counter = 0
-    while(nums.length > 1){
-        console.log('start:', nums)
-        let curr = nums[0]
-        for(let i = 1, len = nums.length ; i< len; i++){
-            if(curr > nums[i]){
-                counter++
-            }
-        }
-        nums.shift()
-        console.log('end:',nums, '\r\n')
-    }
-    return counter
+    //TODO.
 };
 
 
