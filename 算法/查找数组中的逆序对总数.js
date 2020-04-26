@@ -23,18 +23,14 @@ var reversePairs = function(nums) {
     let counter = 0
     while(nums.length > 1){
         console.log('start:', nums)
-        for(let i = 0, len = nums.length - 1; i< len; i++){
-            if(nums[i] > nums[i+1]){
-                //swap
-                var temp = nums[i]
-                nums[i] = nums[i+1]
-                nums[i+1] = temp
-                //
+        let curr = nums[0]
+        for(let i = 1, len = nums.length ; i< len; i++){
+            if(curr > nums[i]){
                 counter++
             }
         }
+        nums.shift()
         console.log('end:',nums, '\r\n')
-        nums.pop()
     }
     return counter
 };
