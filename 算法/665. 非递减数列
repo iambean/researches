@@ -1,0 +1,58 @@
+### 1. 原题
+
+[665. 非递减数列](https://leetcode-cn.com/problems/non-decreasing-array/) 难度 简单
+
+给你一个长度为 n 的整数数组，请你判断在 最多 改变 1 个元素的情况下，该数组能否变成一个非递减数列。
+
+我们是这样定义一个非递减数列的： 对于数组中所有的 i (0 <= i <= n-2)，总满足 nums[i] <= nums[i + 1]。
+
+示例 1:
+输入: nums = [4,2,3]
+输出: true
+解释: 你可以通过把第一个4变成1来使得它成为一个非递减数列。
+示例 2:
+输入: nums = [4,2,1]
+输出: false
+解释: 你不能在只改变一个元素的情况下将其变为非递减数列。
+
+说明：
+1 <= n <= 10 ^ 4
+- 10 ^ 5 <= nums[i] <= 10 ^ 5
+
+
+### 2. 解题思路
+1. 因为只能最多改变一次，那么如果任意出现两个数字，都比其下一个数大的话，那么一定不满足条件，因此最好有个计数器统计出现比后一个数大的次数。
+2. 当只有一个逆序数的时候，即nums[i] > nums[i+1]时，也有可能无法做到只改一个数字就能实现有序。即当nums[i-1]>nums[i+1]且nums[i]>nums[i+2]时无论怎么改都无法做到。
+
+### 3. 编码实现
+```js
+/**
+ * @param {number[]} nums
+ * @return {boolean}
+ */
+var checkPossibility = function(nums) {
+    // 如果不到三个数，那么一定可以。
+    if(nums.length < 3){ 
+        return true
+    }
+    // 不合规则的数字出现的次数
+    let count = 0
+    let len = nums.length
+    // 队列长度+2了，因此遍历也不一样
+    for(let index = 0; index<len; index++){
+        let prev = nums[index -1] // 如果index=0，那么prev=undefined， 不影响判断。next2同。
+        let curr = nums[index]
+        let next = nums[index + 1]
+        let next2 = nums[index + 2]
+        if(curr > next){
+            if(++count > 1){
+                return false
+            }
+            if(prev > next && curr > next2){
+                return false
+            }
+        }
+    }
+    return true
+};
+```
