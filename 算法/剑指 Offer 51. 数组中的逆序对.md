@@ -1,4 +1,6 @@
+[剑指 Offer 51. 数组中的逆序对](https://leetcode-cn.com/problems/shu-zu-zhong-de-ni-xu-dui-lcof/)
 
+```js
 /**
 from leetcode : https://leetcode-cn.com/problems/shu-zu-zhong-de-ni-xu-dui-lcof/
 
@@ -24,3 +26,4 @@ var reversePairs = function(nums) {
 
 
 console.log(reversePairs([7,5,6,4]))
+```
