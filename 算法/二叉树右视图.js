@@ -1,0 +1,71 @@
+
+// 计算二叉树的右视图从顶到底的序列。
+
+function getRightSideView(tree){
+    // TODO:
+    const dataResult = []
+    const nodeList = getNodeList([tree])
+    for(let i = 0; i< nodeList.length; i++){
+        let currLayer = nodeList[i]
+        let lastNode = currLayer[currLayer.length - 1]
+        dataResult.push(lastNode.val)
+    }
+    return dataResult
+
+    // 按照广度优先从根节点遍历，生成所有节点的二维数组。
+    function getNodeList(nodes){
+        console.log(nodes.map(i => i.val).join('-'))
+        let result = []
+        let subNodes = []
+        for(let i=0; i<nodes.length ; i++){
+            const node = nodes[i]
+            if(node.left){
+                subNodes.push(node.left)
+            }
+            if(node.right){
+                subNodes.push(node.right)
+            }
+        }
+        if(subNodes.length > 0){
+            let ns = getNodeList(subNodes)
+            result.push(ns)
+            console.log('...', ns)
+        }else{
+            console.log('---', result)
+            return result
+        }
+    }
+}
+
+const aTree = {
+    val: 1,
+    left: {
+        val: 2, 
+        right:{ 
+            val:4 , 
+            left: {val: 7}
+        }
+    },
+    right: {
+        val: 3,
+        left: {val: 5},
+        right: {val: 6}
+    }
+}
+console.log(
+    'output: \r\n',
+    getRightSideView(aTree) // output: [ 1, 3, 6, 7]
+)
+
+/**
+解释:
+      1            <--- 1
+    /   \
+   2     3         <--- 3
+    \   / \
+    4  5   6       <--- 6
+   /
+  7				   <--- 7
+
+*/
+
