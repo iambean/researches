@@ -16,7 +16,7 @@ const tree = {
     left: {
         val: 2,
         left: { val: 4, right: {val : 7 }},
-        right:{ val: 5, right: {val : 9 }}
+        right:{ val: 5}
     },
     right: {
         val: 3,
