@@ -24,6 +24,13 @@ const tree = {
     }
 }
 
+const walk = function(){
+ //...
+}
+print(walk(tree))
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 //递归版
 const treeWalker1 = function _walk(node) {
     let result = []
