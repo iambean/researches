@@ -45,11 +45,14 @@ const treeWalker1 = function _walk(node) {
 }
 // console.log('二叉树的后续遍历【递归版】：\r\n', treeWalker1(tree))
 
-// 非递归版
+// 非递归版（使用栈）
 const treeWalker2 = (node) => {
-    let leftNodes = [node]
-    while(leftNodes.length>0){
-        let curr = leftNodes.pop()
+    const stack = [node]
+    while(stack.length>0){
+        let curr = stack.pop()
+        if(curr.right){
+         stack.unshift()
+        }
     }
 }
 // console.log('二叉树的后续遍历【非递归版】：\r\n', treeWalker1(tree))
