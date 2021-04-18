@@ -1,5 +1,36 @@
 
 // 计算二叉树的右视图从顶到底的序列。
+```js
+		function getRightSideView(){
+			// TODO.
+		}
+		const tree = {
+			val: 1,
+			left: {
+				val: 2, 
+				right:{ 
+					val:4 , 
+					left: {val: 7}
+				}
+			},
+			right: {
+				val: 3,
+				left: {val: 5}
+				right: {val: 6}
+			}
+		}
+		getRightSideView(tree) // output: [ 1, 3, 6, 7]
+		
+		解释:
+		   1            <--- 1
+		 /   \
+		2     3         <--- 3
+		 \   / \
+		  4 5   6       <--- 6
+		 /
+		7				<--- 7
+	```
+
 
 function getRightSideView(tree){
     // TODO:
@@ -56,16 +87,4 @@ console.log(
     'output: \r\n',
     getRightSideView(aTree) // output: [ 1, 3, 6, 7]
 )
-
-/**
-解释:
-      1            <--- 1
-    /   \
-   2     3         <--- 3
-    \   / \
-    4  5   6       <--- 6
-   /
-  7				   <--- 7
-
-*/
 
