@@ -27,7 +27,7 @@ function fb_primitive(n){
     return n < 2 ? 1 : (fb(n-1) + fb(n-2)) 
 }
 console.time('primitive-mode-time-cost')
-console.log(`Primitive Mode,  n=${Num}, result is ${fb(Num)}, function call count:${fb_call_count}.`)
+console.log(`Primitive Mode,  n=${Num}, result is ${fb_primitive(Num)}, function call count:${fb_call_count}.`)
 console.timeEnd('primitive-mode-time-cost')
 console.log('-----------------------------------------------------------------')
 
