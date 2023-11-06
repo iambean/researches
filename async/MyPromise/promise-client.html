@@ -1,0 +1,55 @@
+
+
+<script type="module">
+    
+    import { MyPromise } from './Promise.js'
+    
+    console.log(MyPromise)
+
+    const getPromiseWithDelayFinish = (delay, isResolved = true) => {
+        return new MyPromise(function(resolve, reject){
+            let data = 'some success DATA.'
+            let err = 'can\'t find.'
+            
+            setTimeout(function(){
+                // 如果未定义是否resolved，就随机。
+                if(isResolved === undefined){
+                    isResolved = Date.now() % 2
+                }
+                isResolved ? resolve(data) : reject(err)
+
+            }, delay)
+        })
+    }
+
+    let p1 = getPromiseWithDelayFinish(1000)
+    let p2 = getPromiseWithDelayFinish(2000)
+
+    getPromiseWithDelayFinish(1000, true)
+    .then( d => {
+        console.log('1:', d)
+        return '1111111111'
+    })
+    .then( d => {
+        console.log('2:', d)
+        return '22222222222'
+    })
+    .then( d => {
+        console.log('3:', d)
+    })
+
+    // p
+    // .then(data => {
+    //     console.log('success:', data)
+    // }).catch(e => {
+    //     console.log('error:', e)
+    // })
+
+    // console.log(MyPromise.resolve({n:'Success'}))
+    // setTimeout(()=>{
+    //     p.then(d=>console.info('......', d))
+    // }, 3000)
+
+    // console.log(p)
+
+</script>

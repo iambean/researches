@@ -1,0 +1,1 @@
+> 遵循Promise/A+规范实现一个自定义的promise，可以运行在browser side and node side.
